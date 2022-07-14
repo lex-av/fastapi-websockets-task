@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html lang="en">
+   <head>
+        <meta charset="UTF-8">
+        <meta name="viewport"
+              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Chat</title>
+    </head>
+    <body>
+        <center><h1>WebSocket Chat</h1></center>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off"/>
+            <button>Send!</button>
+        </form>
+        <ol id='messages'></ol>
+        <script>
+            var ws = new WebSocket("ws://localhost:8081/ws");
+
+            ws.onmessage = function(event) {
+                var messages = document.getElementById('messages')
+                var message = document.createElement('li')
+
+                var json_data = JSON.parse(event.data)
+                var content = document.createTextNode("" + json_data["msg"] + " (with srv order: " + json_data["counter"] + ")")
+
+                message.appendChild(content)
+                messages.appendChild(message)
+            };
+
+            function sendMessage(event) {
+                var input = document.getElementById("messageText")
+                var json_data = {"mark":"from js with love", "value":" " + input.value + " "}
+                ws.send(JSON.stringify(json_data))
+
+                input.value = ''
+                event.preventDefault()
+            }
+        </script>
+    </body>
+
+</html>
