@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, WebSocket
+from starlette.responses import FileResponse
 
 main_app = FastAPI(
     title="messages",
@@ -9,4 +10,15 @@ main_app = FastAPI(
 
 @main_app.get("/")
 async def root():
-    return {"message": "Hello World"}
+    return FileResponse("client_utility/ws.html")
+
+
+@main_app.websocket("/ws")
+async def websocket_endpoint(websocket: WebSocket):
+    counter = 1  # Used to numerate messages on main page
+    await websocket.accept()
+    while True:
+        data = await websocket.receive_json()
+        print(data)
+        await websocket.send_json({"counter": counter, "data": data["value"]})
+        counter += 1
