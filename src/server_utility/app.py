@@ -10,7 +10,7 @@ main_app = FastAPI(
 
 @main_app.get("/")
 async def root():
-    return FileResponse("client_utility/ws.html")
+    return FileResponse("client_utility/main_page_ws.html")
 
 
 @main_app.websocket("/ws")
