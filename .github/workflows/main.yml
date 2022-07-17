@@ -1,13 +1,13 @@
 # Standard workflow for code quality and tests
 
-name: CI
+name: CI-websockets-task
 
 on: push
 
 jobs:
   code_quality:
     runs-on: ubuntu-latest
-    name: Checks with black, flake8, isort and possibly run tests
+    name: Checks with black, flake8, isort
     container: python:3.8
 
     steps:
@@ -19,4 +19,3 @@ jobs:
           ls -la
           flake8 .
           isort --check .
-          pytest -v
