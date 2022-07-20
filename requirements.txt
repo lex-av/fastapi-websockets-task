@@ -9,6 +9,8 @@ h11==0.13.0
 httptools==0.4.0
 identify==2.5.1
 idna==3.3
+Jinja2==3.1.2
+MarkupSafe==2.1.1
 nodeenv==1.7.0
 platformdirs==2.5.2
 pydantic==1.9.1
